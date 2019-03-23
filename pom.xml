@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com</groupId>
+  <artifactId>J-ML-API</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <dependencies>
+  <dependency>
+	    <groupId>com.github.Simonwep</groupId>
+	    <artifactId>java-express</artifactId>
+	    <version>master-SNAPSHOT</version>
+	</dependency>
+  	<dependency>
+  		<groupId>com.sun.net.httpserver</groupId>
+  		<artifactId>http</artifactId>
+  		<version>20070405</version>
+  	</dependency>
+  	<!-- https://mvnrepository.com/artifact/org.encog/encog-core -->
+<dependency>
+    <groupId>org.encog</groupId>
+    <artifactId>encog-core</artifactId>
+    <version>3.4</version>
+</dependency>
+  	
+  </dependencies>
+  <repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+</project>
