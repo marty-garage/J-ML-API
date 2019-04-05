@@ -35,8 +35,8 @@ public class TasksModelsServerResource extends AbstractServerResource implements
     // Define denied roles for the method "get".
     private static final String[] get1DeniedGroups = new String[] {};
 
-    public net.apispark.webapi.representation.Createmodel represent() throws Exception {
-       net.apispark.webapi.representation.Createmodel result = null;
+    public List<net.apispark.webapi.representation.Createmodel> represent() throws Exception {
+       ArrayList<net.apispark.webapi.representation.Createmodel> result = new ArrayList<net.apispark.webapi.representation.Createmodel>() ;
         checkGroups(get1AllowedGroups, get1DeniedGroups);
         
 
@@ -45,7 +45,7 @@ public class TasksModelsServerResource extends AbstractServerResource implements
         // Query parameters
         
         	
-	    result = new net.apispark.webapi.representation.Createmodel();
+	    result.add( new net.apispark.webapi.representation.Createmodel());
 	    
 	    // Initialize here your bean
          } catch (Exception ex) {

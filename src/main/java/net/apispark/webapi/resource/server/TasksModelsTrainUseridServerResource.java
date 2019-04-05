@@ -52,7 +52,7 @@ public class TasksModelsTrainUseridServerResource extends AbstractServerResource
         // Query parameters
         
         	
-	    result = new net.apispark.webapi.representation.AnonymousRepresentation6();
+	    result = new net.apispark.webapi.representation.AnonymousRepresentation6();//the effective object used
 	    
 	    // Initialize here your bean
          } catch (Exception ex) {

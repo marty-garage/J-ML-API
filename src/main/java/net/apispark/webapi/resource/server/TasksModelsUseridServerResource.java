@@ -11,6 +11,7 @@ import org.restlet.data.Reference;
 import org.restlet.data.MediaType;
 import org.restlet.data.Status;
 import org.restlet.data.Preference;
+import org.eclipse.jetty.util.log.Log;
 import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Header;
 import org.restlet.engine.header.HeaderConstants;
@@ -45,7 +46,8 @@ public class TasksModelsUseridServerResource extends AbstractServerResource impl
 			// Path variables
 			
 	    String useridPathVariable = Reference.decode(getAttribute("userid"));
-
+	    getLogger().log(Level.INFO, "request from user"+useridPathVariable);
+	    
         // Query parameters
         
         	
