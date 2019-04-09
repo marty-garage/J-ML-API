@@ -51,6 +51,7 @@ public class NeaTest {
       	
       	model.holdBackValidation(0.3, false, 1001);
       	
+      	//------------------------------------------------
       	NEATPopulation pop = new NEATPopulation(30,4,1000);
       	pop.setInitialConnectionDensity(1.0);// not required, but speeds training
 		pop.reset();

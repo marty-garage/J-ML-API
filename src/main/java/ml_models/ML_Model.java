@@ -36,8 +36,8 @@ public abstract class ML_Model {
 	private EncogModel _model;
 	private  EvolutionaryAlgorithm _train;
 	
-	protected String setType(String type) { // to be used by specific constructors
-		_model.selectMethod(_data, type);
+	protected String setType(String type) { 
+		_model.selectMethod(_data, type); //TODO: data still null here too.
 		return type;
 	}
 	public abstract NEATNetwork Train();

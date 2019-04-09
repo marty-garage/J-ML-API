@@ -21,10 +21,13 @@ import org.encog.util.csv.CSVFormat;
 /**
  * @author marty
  *
+ *
  */
+
+
 public class ModelsFactory <T extends ML_Model>{
 
-	public ML_Model getModel(Type modelType) throws InstantiationException{
+	public  ML_Model getModel(Type modelType) throws InstantiationException{
 		ML_Model instance;  
 		if(modelType == null){
 			throw new InstantiationException("no model type provided");
@@ -40,7 +43,24 @@ public class ModelsFactory <T extends ML_Model>{
 		return instance;
 	   }
 	
-	public ML_Model getModel(Type modelType,T model) throws InstantiationException{
+	public  ML_Model getModel(Type modelType,VersatileMLDataSet data) throws InstantiationException{
+		ML_Model instance;  
+		if(modelType == null){
+			throw new InstantiationException("no model type provided");
+		}		
+
+		try {
+			Constructor<?> costructor;
+			costructor = Class.forName(modelType.getTypeName()).getConstructor(new Class[]{VersatileMLDataSet.class});
+			instance = (ML_Model) costructor.newInstance(data);
+		} catch (ReflectiveOperationException | RuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new InstantiationException("model instatation failed");
+		}
+		return instance;
+	   }
+	public  ML_Model getModel(Type modelType,T model) throws InstantiationException{
 		ML_Model instance;  
 		if(modelType == null){
 			throw new InstantiationException("no model type provided");
@@ -51,7 +71,7 @@ public class ModelsFactory <T extends ML_Model>{
 				Constructor<?> costructor;
 				costructor = Class.forName(modelType.getClass().getSimpleName()).getConstructor(new Class[]{ML_Model.class});
 				instance = (ML_Model) costructor.newInstance(model);
-				this.SetUpInstance(instance);
+				SetUpInstance(instance);
 			} catch (NoSuchMethodException | SecurityException | 
 						ClassNotFoundException | InvocationTargetException | 
 						IllegalAccessException | IllegalArgumentException e) {
@@ -64,7 +84,7 @@ public class ModelsFactory <T extends ML_Model>{
 
 		try {
 			instance = (T)Class.forName(modelType.getClass().getSimpleName()).newInstance();
-			this.SetUpInstance(instance);
+			SetUpInstance(instance);
 		} catch (IllegalAccessException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,22 +96,18 @@ public class ModelsFactory <T extends ML_Model>{
 	
 	
 	
-	private void SetUpInstance(ML_Model model) {
-		URL url = Thread.currentThread().getContextClassLoader()
-				  .getResource("neat/solar2.txt");
-		File filename = new File(url.getFile());
-		   
-	    	CSVFormat format = new CSVFormat ( '.' ,' ') ; 
-	    	VersatileDataSource source = new CSVDataSource(filename , true ,format) ;
-	    	VersatileMLDataSet data = new VersatileMLDataSet(source) ;
-	    	data.getNormHelper().setFormat(format) ;
-	    	ColumnDefinition columnSSN = data.defineSourceColumn("SSN", ColumnType.continuous) ;
-	    	data.defineSourceColumn( "DEV" , ColumnType.continuous) ;
-	    	data.defineSourceColumn("MON",ColumnType.continuous);
-	    	data.defineSingleOutputOthersInput(columnSSN);
-	    	
-	    	
-	    	model.set_model(new EncogModel(model.get_data()));;
+	private static void SetUpInstance(ML_Model model) {
+		
+		
+		if(model.get_data()!= null) {
+			model.set_model(new EncogModel(model.get_data())); //TODO: move to factory
+		}else {
+			//EncogModel model = new EncogModel();
+		}
+		
+		
+	    	//model.set_model(new EncogModel(model.get_data()));;
 	    	
 	}
+
 }
