@@ -6,6 +6,8 @@ import ml_models.ML_Model;
 
 import java.util.ArrayList;
 
+import org.encog.neural.neat.NEATNetwork;
+
 /*
  * Model class extension with data usage additional info,
  * serialization of model associated/operated with/by instance of this.
@@ -40,5 +42,11 @@ public class Usemodel<T extends ML_Model> extends ML_Model{
     public void setCreatedAt(java.lang.String createdAt) {
         this.createdAt = createdAt;
     }
+
+	@Override
+	public NEATNetwork Train() {
+		// TODO Auto-generated method stub
+		return this._model.Train();
+	}
 
 }

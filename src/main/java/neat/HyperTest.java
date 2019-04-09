@@ -72,13 +72,13 @@ public class HyperTest {
       	//MLMethodGenomeFactory
       	EvolutionaryAlgorithm train = NEATUtil.constructNEATTrainer(pop, score);
       	
-      	
+      	//----------------------------------------
       	
       	  		OriginalNEATSpeciation speciation = new OriginalNEATSpeciation();
                 speciation.setCompatibilityThreshold(3);
                 train.setSpeciation(speciation = new OriginalNEATSpeciation());
 
-      	  
+      	 //------------------------------------------ 
       	 
       	do {
 			train.iteration();
