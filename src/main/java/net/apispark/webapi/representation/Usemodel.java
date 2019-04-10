@@ -44,7 +44,7 @@ public class Usemodel<T extends ML_Model> extends ML_Model{
     }
 
 	@Override
-	public NEATNetwork Train() {
+	public Object Train() {
 		// TODO Auto-generated method stub
 		return this._model.Train();
 	}

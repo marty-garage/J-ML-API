@@ -6,9 +6,11 @@ import org.encog.ml.data.versatile.columns.ColumnDefinition;
 import org.encog.ml.data.versatile.columns.ColumnType;
 import org.encog.ml.data.versatile.sources.CSVDataSource;
 import org.encog.ml.data.versatile.sources.VersatileDataSource;
+import org.encog.neural.neat.NEATNetwork;
 import org.encog.util.csv.CSVFormat;
+import org.encog.util.simple.EncogUtility;
 
-
+import ml_models.ML_Model;
 import ml_models.ModelsFactory;
 import ml_models.Neat_model;
 
@@ -36,13 +38,15 @@ public class Test_modelCostructionChain<T> {
 	    	ModelsFactory<?> factory = new ModelsFactory();
 	    	
 	    	
-	    	
+	    	ML_Model my_model = null;
 	    	try {
-				factory.getModel(Class.forName("ml_models.Neat_model"),data);
+				my_model = factory.getModel(Class.forName("ml_models.Neat_model"),data);
 			} catch (InstantiationException | ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	    	NEATNetwork my_network = (NEATNetwork) my_model.Train();
+	    	EncogUtility.evaluate(my_network, my_model.get_model().getValidationDataset());
 		// TODO Auto-generated method stub
 
 	}

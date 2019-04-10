@@ -6,7 +6,7 @@ import org.encog.ml.factory.MLMethodFactory;
 import org.encog.ml.model.EncogModel;
 import org.encog.neural.neat.NEATNetwork;
 
-public abstract class ML_Model {
+public abstract class ML_Model<E> {
 	
 	public VersatileMLDataSet get_data() {
 		return _data;
@@ -40,7 +40,7 @@ public abstract class ML_Model {
 		_model.selectMethod(_data, type); //TODO: data still null here too.
 		return type;
 	}
-	public abstract NEATNetwork Train();
+	public abstract E Train();
 	
 
 }
