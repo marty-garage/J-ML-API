@@ -12,7 +12,7 @@ import org.encog.util.csv.CSVFormat;
 import ml_models.ModelsFactory;
 import ml_models.Neat_model;
 
-public class Test_modelCostructionChain {
+public class Test_modelCostructionChain<T> {
 
 	public Test_modelCostructionChain() {
 		// TODO Auto-generated constructor stub
@@ -33,7 +33,7 @@ public class Test_modelCostructionChain {
 	    	data.defineSourceColumn("MON",ColumnType.continuous);
 	    	data.defineSingleOutputOthersInput(columnSSN);
 	    	
-	    	ModelsFactory factory = new ModelsFactory();
+	    	ModelsFactory<?> factory = new ModelsFactory();
 	    	
 	    	
 	    	

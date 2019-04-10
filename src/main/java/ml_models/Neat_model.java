@@ -15,6 +15,7 @@ public class Neat_model extends ML_Model {
 	public Neat_model(VersatileMLDataSet dataset) {
 		
 		super.set_data(dataset);
+		super.set_model(new EncogModel(super.get_data()));
 		VersatileMLDataSet data = super.get_data(); //TODO does not exist
 		super.setType(MLMethodFactory.TYPE_NEAT);
 		data.analyze();

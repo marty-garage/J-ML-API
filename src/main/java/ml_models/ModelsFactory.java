@@ -71,7 +71,7 @@ public class ModelsFactory <T extends ML_Model>{
 				Constructor<?> costructor;
 				costructor = Class.forName(modelType.getClass().getSimpleName()).getConstructor(new Class[]{ML_Model.class});
 				instance = (ML_Model) costructor.newInstance(model);
-				SetUpInstance(instance);
+				//SetUpInstance(instance);
 			} catch (NoSuchMethodException | SecurityException | 
 						ClassNotFoundException | InvocationTargetException | 
 						IllegalAccessException | IllegalArgumentException e) {
@@ -84,7 +84,7 @@ public class ModelsFactory <T extends ML_Model>{
 
 		try {
 			instance = (T)Class.forName(modelType.getClass().getSimpleName()).newInstance();
-			SetUpInstance(instance);
+			//SetUpInstance(instance);
 		} catch (IllegalAccessException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,18 +96,16 @@ public class ModelsFactory <T extends ML_Model>{
 	
 	
 	
-	private static void SetUpInstance(ML_Model model) {
-		
-		
-		if(model.get_data()!= null) {
-			model.set_model(new EncogModel(model.get_data())); //TODO: move to factory
-		}else {
-			//EncogModel model = new EncogModel();
-		}
-		
-		
-	    	//model.set_model(new EncogModel(model.get_data()));;
-	    	
-	}
+	/*
+	 * private static void SetUpInstance(ML_Model model) {
+	 * 
+	 * 
+	 * if(model.get_data()!= null) { model.set_model(new
+	 * EncogModel(model.get_data())); //TODO: move to factory }else { //EncogModel
+	 * model = new EncogModel(); }
+	 * 
+	 * 
+	 * }
+	 */
 
 }
