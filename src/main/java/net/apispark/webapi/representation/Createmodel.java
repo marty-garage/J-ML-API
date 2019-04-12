@@ -10,6 +10,9 @@ public class Createmodel {
 
     private java.lang.String id;
 
+    public Createmodel() {
+    	System.out.println("creating createmodel");
+    }
     
     public java.lang.String getId() {
         return id;

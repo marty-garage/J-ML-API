@@ -17,6 +17,7 @@ public abstract class ML_Model<E> {
 	}
 
 	public EncogModel get_model() {
+		System.out.println("getting model");
 		return _model;
 	}
 

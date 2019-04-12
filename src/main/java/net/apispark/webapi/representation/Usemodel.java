@@ -6,26 +6,36 @@ import ml_models.ML_Model;
 
 import java.util.ArrayList;
 
+import org.encog.ml.model.EncogModel;
 import org.encog.neural.neat.NEATNetwork;
 
 /*
  * Model class extension with data usage additional info,
  * serialization of model associated/operated with/by instance of this.
  */
-public class Usemodel<T extends ML_Model> extends ML_Model{
+public class Usemodel<T extends ML_Model, E>{
     /** Default serial version ID. */
     private static final long serialVersionUID = 1L;
 
-    private java.lang.String id;
-    private ML_Model _model;
+    private java.lang.String id = "890gje09";
+    private T _model;
 
-    private Usemodel(T model) {
+    public Usemodel(T model) {
     	_model = model;
+    	System.out.println("private in usemodel:"+_model.toString());
     }
     
     public java.lang.String getId() {
         return id;
     }
+    
+    @JsonProperty("_model")
+    public String toString() {
+        return _model.toString();
+        //_model.get_model().toString() get the underlying 
+        //EncogModel object used by the model class implementation (NEAT)
+    }
+   
 
     public void setId(java.lang.String id) {
         this.id = id;
@@ -43,10 +53,10 @@ public class Usemodel<T extends ML_Model> extends ML_Model{
         this.createdAt = createdAt;
     }
 
-	@Override
-	public Object Train() {
+	public E Train() {
 		// TODO Auto-generated method stub
-		return this._model.Train();
+		return (E) this._model.Train();
 	}
+	
 
 }

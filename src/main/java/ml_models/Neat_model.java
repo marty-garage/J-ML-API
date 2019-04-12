@@ -23,7 +23,7 @@ public class Neat_model extends ML_Model {
 		data.setLagWindowSize(90);
 		data.setLeadWindowSize(4);
  	
-		super.get_model().holdBackValidation(0.3, false, 1001);
+		super.get_model().holdBackValidation(0.3, false, 75);
  	
  	//------------------------------------------------
 		_pop = new NEATPopulation(30,4,1000);

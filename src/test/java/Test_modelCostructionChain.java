@@ -45,6 +45,8 @@ public class Test_modelCostructionChain<T> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	    	
+	    	
 	    	NEATNetwork my_network = (NEATNetwork) my_model.Train();
 	    	EncogUtility.evaluate(my_network, my_model.get_model().getValidationDataset());
 		// TODO Auto-generated method stub
