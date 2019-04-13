@@ -1,6 +1,8 @@
 import java.io.File;
 import java.net.URL;
 
+import org.encog.Encog;
+import org.encog.ml.MLRegression;
 import org.encog.ml.data.versatile.VersatileMLDataSet;
 import org.encog.ml.data.versatile.columns.ColumnDefinition;
 import org.encog.ml.data.versatile.columns.ColumnType;
@@ -40,16 +42,18 @@ public class Test_modelCostructionChain<T> {
 	    	
 	    	ML_Model my_model = null;
 	    	try {
-				my_model = factory.getModel(Class.forName("ml_models.Neat_model"),data);
+				my_model = factory.getModel(Class.forName("ml_models.FF_model"),data);
 			} catch (InstantiationException | ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	    	
 	    	
-	    	NEATNetwork my_network = (NEATNetwork) my_model.Train();
+	    	MLRegression my_network = (MLRegression) my_model.Train();
 	    	EncogUtility.evaluate(my_network, my_model.get_model().getValidationDataset());
 		// TODO Auto-generated method stub
+
+	    		Encog.getInstance().shutdown () ;
 
 	}
 
