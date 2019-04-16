@@ -3,9 +3,11 @@ package net.apispark.webapi.resource.server;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +35,7 @@ import org.restlet.resource.ServerResource;
 import org.restlet.util.Series;
 
 import ml_models.ML_Model;
+import ml_models.ModelsDenomination;
 import ml_models.ModelsFactory;
 
 import java.util.logging.Level;
@@ -49,15 +52,17 @@ public class TasksModelsServerResource extends AbstractServerResource implements
     // Define denied roles for the method "get".
     private static final String[] get1DeniedGroups = new String[] {};
 
-    public List<net.apispark.webapi.representation.Usemodel> represent() throws Exception {
-       ArrayList<Usemodel> result = new ArrayList<net.apispark.webapi.representation.Usemodel>() ;
+    public List<ml_models.ModelsDenomination> represent() throws Exception {
+       ArrayList<ModelsDenomination> result = new ArrayList<ModelsDenomination>() ;
         checkGroups(get1AllowedGroups, get1DeniedGroups);
         
+       
+        result.addAll(Arrays.asList(ModelsDenomination.values()));
+     
 
         try {
 		
-        // Query parameters
-        
+        /*        
         	URL url = Thread.currentThread().getContextClassLoader()
   				  .getResource("neat/solar2.txt");
   		File filename = new File(url.getFile());
@@ -84,6 +89,8 @@ public class TasksModelsServerResource extends AbstractServerResource implements
 	    result.add( new net.apispark.webapi.representation.Usemodel<ML_Model,NEATNetwork>(my_model));
 	    
 	    // Initialize here your bean
+	     * 
+	     */
          } catch (Exception ex) {
             // In a real code, customize handling for each type of exception
             getLogger().log(Level.WARNING, "Error when executing the method", ex);

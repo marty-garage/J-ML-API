@@ -104,7 +104,7 @@ public class TasksDatasetsUseridServerResource extends AbstractServerResource im
         // Query parameters
         
         	
-	    result = new net.apispark.webapi.representation.UploadDataset();
+	    result = null;//TODO: add the dao retrive new net.apispark.webapi.representation.UploadDataset();
 	    
 	    // Initialize here your bean
          } catch (Exception ex) {

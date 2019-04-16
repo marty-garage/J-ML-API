@@ -3,19 +3,35 @@ package net.apispark.webapi.representation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class UploadDataset {
-    /** Default serial version ID. */
-    private static final long serialVersionUID = 1L;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-    private java.lang.String id;
+import org.encog.ml.data.versatile.VersatileMLDataSet;
+import org.encog.ml.data.versatile.sources.VersatileDataSource;
+
+
+@Entity
+@Table(name = "Datasets")
+public class UploadDataset extends VersatileMLDataSet{
+    public UploadDataset(VersatileDataSource theSource) {
+		super(theSource);
+		// TODO Auto-generated constructor stub
+	}
+  
+
+    @Id
+    @org.hibernate.annotations.Type(type="pg-uuid")
+    private UUID id;
 
     
-    public java.lang.String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(java.lang.String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

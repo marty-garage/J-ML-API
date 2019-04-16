@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ml_models.ML_Model;
 
 import java.util.ArrayList;
+import java.util.UUID;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.encog.ml.model.EncogModel;
 import org.encog.neural.neat.NEATNetwork;
@@ -13,11 +18,15 @@ import org.encog.neural.neat.NEATNetwork;
  * Model class extension with data usage additional info,
  * serialization of model associated/operated with/by instance of this.
  */
+@Entity
+@Table(name = "Usermodel")
 public class Usemodel<T extends ML_Model, E>{
     /** Default serial version ID. */
     private static final long serialVersionUID = 1L;
 
-    private java.lang.String id = "890gje09";
+    @Id
+    @org.hibernate.annotations.Type(type="pg-uuid")
+    private UUID id;// = "890gje09";
     private T _model;
 
     public Usemodel(T model) {
@@ -25,7 +34,7 @@ public class Usemodel<T extends ML_Model, E>{
     	System.out.println("private in usemodel:"+_model.toString());
     }
     
-    public java.lang.String getId() {
+    public UUID getId() {
         return id;
     }
     
@@ -37,7 +46,7 @@ public class Usemodel<T extends ML_Model, E>{
     }
    
 
-    public void setId(java.lang.String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

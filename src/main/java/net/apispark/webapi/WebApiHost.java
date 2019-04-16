@@ -6,6 +6,9 @@ import org.restlet.data.Protocol;
 
 import dao.HibernateUtil;
 import express.Express;
+import ml_models.ML_Model;
+import net.apispark.webapi.representation.Usemodel;
+
 
 public class WebApiHost {
 
@@ -23,10 +26,12 @@ public class WebApiHost {
        Session session = HibernateUtil.getSessionFactory().openSession();
        
        session.beginTransaction();
+       MLUser model = new MLUser();
        // Check database version
        String sql = "select version()";
-       String result = (String) session.createNativeQuery(sql).getSingleResult();
-       System.out.println(result);
+       session.save(model);
+       //String result = (String) session.createNativeQuery(sql).getSingleResult();
+       //System.out.println(result);
        session.getTransaction().commit();
        session.close();     
        HibernateUtil.shutdown();
