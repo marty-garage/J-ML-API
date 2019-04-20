@@ -62,35 +62,7 @@ public class TasksModelsServerResource extends AbstractServerResource implements
 
         try {
 		
-        /*        
-        	URL url = Thread.currentThread().getContextClassLoader()
-  				  .getResource("neat/solar2.txt");
-  		File filename = new File(url.getFile());
-  		   
-  	    	CSVFormat format = new CSVFormat ( '.' ,' ') ; 
-  	    	VersatileDataSource source = new CSVDataSource(filename , true ,format) ;
-  	    	VersatileMLDataSet data = new VersatileMLDataSet(source) ;
-  	    	data.getNormHelper().setFormat(format) ;
-  	    	ColumnDefinition columnSSN = data.defineSourceColumn("SSN", ColumnType.continuous) ;
-  	    	data.defineSourceColumn( "DEV" , ColumnType.continuous) ;
-  	    	data.defineSourceColumn("MON",ColumnType.continuous);
-  	    	data.defineSingleOutputOthersInput(columnSSN);
-  	    	
-  	    	ModelsFactory<?> factory = new ModelsFactory();
-  	    	
-  	    	
-  	    	ML_Model my_model = null;
-  	    	try {
-  				my_model = factory.getModel(Class.forName("ml_models.Neat_model"),data);
-  			} catch (InstantiationException | ClassNotFoundException e) {
-  				// TODO Auto-generated catch block
-  				e.printStackTrace();
-  			}	
-	    result.add( new net.apispark.webapi.representation.Usemodel<ML_Model,NEATNetwork>(my_model));
-	    
-	    // Initialize here your bean
-	     * 
-	     */
+       
          } catch (Exception ex) {
             // In a real code, customize handling for each type of exception
             getLogger().log(Level.WARNING, "Error when executing the method", ex);

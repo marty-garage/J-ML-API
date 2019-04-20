@@ -1,5 +1,7 @@
 package ml_models;
 
+import java.io.Serializable;
+
 import org.encog.ml.CalculateScore;
 import org.encog.ml.data.versatile.VersatileMLDataSet;
 import org.encog.ml.factory.MLMethodFactory;
@@ -9,7 +11,7 @@ import org.encog.neural.neat.NEATPopulation;
 import org.encog.neural.neat.NEATUtil;
 import org.encog.neural.networks.training.TrainingSetScore;
 
-public class Neat_model extends ML_Model {
+public class Neat_model extends ML_Model implements Serializable {
 	private NEATPopulation _pop;
 
 	public Neat_model(VersatileMLDataSet dataset) {

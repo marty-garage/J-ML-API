@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.restlet.data.Reference;
 import org.restlet.data.MediaType;
@@ -21,6 +22,7 @@ import org.encog.ml.data.versatile.sources.CSVDataSource;
 import org.encog.ml.data.versatile.sources.VersatileDataSource;
 import org.encog.neural.neat.NEATNetwork;
 import org.encog.util.csv.CSVFormat;
+import org.hibernate.Session;
 import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Header;
 import org.restlet.engine.header.HeaderConstants;
@@ -33,11 +35,13 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 import org.restlet.util.Series;
 
+import dao.HibernateUtil;
 import ml_models.ML_Model;
 import ml_models.ModelsFactory;
 
 import java.util.logging.Level;
 
+import net.apispark.webapi.MLUser;
 import net.apispark.webapi.representation.Usemodel;
 import net.apispark.webapi.resource.TasksModelsUseridResource;
 import net.apispark.webapi.utils.QueryParameterUtils;
@@ -84,65 +88,83 @@ public class TasksModelsUseridServerResource extends AbstractServerResource impl
     private static final String[] post3DeniedGroups = new String[] {};
 
     public List<net.apispark.webapi.representation.Usemodel> add(net.apispark.webapi.representation.Createmodel bean) throws Exception {
-       List<Usemodel> result = null;
+       List<Usemodel> result = new ArrayList<Usemodel>();
         checkGroups(post3AllowedGroups, post3DeniedGroups);
         
-    	if (bean==null) {
-    		throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST);
-    	}
-
+		/*
+		 * if (bean==null) { throw new
+		 * ResourceException(Status.CLIENT_ERROR_BAD_REQUEST); }
+		 */
         try {
 		
 			// Path variables
 			
-	    String useridPathVariable = Reference.decode(getAttribute("userid"));
+	    //String useridPathVariable = Reference.decode(getAttribute("userid"));
 
         // Query parameters
         
-        	
+
 	    try {
-			
-	        // Query parameters
-	        
-	        	URL url = Thread.currentThread().getContextClassLoader()
-	  				  .getResource("neat/solar2.txt");
-	  		File filename = new File(url.getFile());
-	  		   
-	  	    	CSVFormat format = new CSVFormat ( '.' ,' ') ; 
-	  	    	VersatileDataSource source = new CSVDataSource(filename , true ,format) ;
-	  	    	VersatileMLDataSet data = new VersatileMLDataSet(source) ;
-	  	    	data.getNormHelper().setFormat(format) ;
-	  	    	ColumnDefinition columnSSN = data.defineSourceColumn("SSN", ColumnType.continuous) ;
-	  	    	data.defineSourceColumn( "DEV" , ColumnType.continuous) ;
-	  	    	data.defineSourceColumn("MON",ColumnType.continuous);
-	  	    	data.defineSingleOutputOthersInput(columnSSN);
-	  	    	
-	  	    	ModelsFactory<?> factory = new ModelsFactory();
-	  	    	
-	  	    	
-	  	    	ML_Model my_model = null;
-	  	    	try {
-	  				my_model = factory.getModel(Class.forName("ml_models.Neat_model"),data);
-	  			} catch (InstantiationException | ClassNotFoundException e) {
-	  				// TODO Auto-generated catch block
-	  				e.printStackTrace();
-	  			}	
-		    result.add( new net.apispark.webapi.representation.Usemodel<ML_Model,NEATNetwork>(my_model));
-		    
-		    // Initialize here your bean
-	         } catch (Exception ex) {
-	            // In a real code, customize handling for each type of exception
-	            getLogger().log(Level.WARNING, "Error when executing the method", ex);
-	            throw new ResourceException(Status.SERVER_ERROR_INTERNAL,
-	                    ex.getMessage(), ex);
-	        }
+
+	    	// Query parameters
+
+	    	URL url = Thread.currentThread().getContextClassLoader()
+	    			.getResource("neat/solar2.txt");
+	    	File filename = new File(url.getFile());
+
+	    	CSVFormat format = new CSVFormat ( '.' ,' ') ; 
+	    	VersatileDataSource source = new CSVDataSource(filename , true ,format) ;
+	    	VersatileMLDataSet data = new VersatileMLDataSet(source) ;
+	    	data.getNormHelper().setFormat(format) ;
+	    	ColumnDefinition columnSSN = data.defineSourceColumn("SSN", ColumnType.continuous) ;
+	    	data.defineSourceColumn( "DEV" , ColumnType.continuous) ;
+	    	data.defineSourceColumn("MON",ColumnType.continuous);
+	    	data.defineSingleOutputOthersInput(columnSSN);
+
+	    	ModelsFactory<?> factory = new ModelsFactory();
+
+
+	    	ML_Model my_model = null;
+	    	Usemodel usermodel = null;
+	    	try {
+	    		my_model = factory.getModel(Class.forName("ml_models.Neat_model"),data);
+	    	} catch (InstantiationException | ClassNotFoundException e) {
+	    		// TODO Auto-generated catch block
+	    		e.printStackTrace();
+	    	}	
+
+	    	result.add(usermodel = new net.apispark.webapi.representation.Usemodel<ML_Model,NEATNetwork>(my_model));
+
+
+	    	/* testing model filed type against postgres*/
+	    	Session session = HibernateUtil.getSessionFactory().openSession();
+
+	    	session.beginTransaction();
+	    	session.save(usermodel);
+	    	
+	    	session.getTransaction().commit();
+	    	session.beginTransaction();
+	    	Usemodel retrived_usermodel = session.byId(Usemodel.class).getReference(usermodel.getId());
+	    	//usermodel = session.byId(Usemodel.class).getReference(UUID.fromString("22758414-155c-45da-a865-1d8836b01603"));
+	    	session.getTransaction().commit();
+	    	session.close();     
+	    	HibernateUtil.shutdown();
+	    	//----------------------------------
+	    	System.out.println(retrived_usermodel.toString());
+	    	// ------------------
+	    } catch (Exception ex) {
+	    	// In a real code, customize handling for each type of exception
+	    	getLogger().log(Level.WARNING, "Error when executing the method", ex);
+	    	throw new ResourceException(Status.SERVER_ERROR_INTERNAL,
+	    			ex.getMessage(), ex);
+	    }
 	    
 	        return result;
 	    
 	    // Initialize here your bean
          } catch (Exception ex) {
             // In a real code, customize handling for each type of exception
-            getLogger().log(Level.WARNING, "Error when executing the method", ex);
+            getLogger().log(Level.WARNING, "Error when returning from request", ex);
             throw new ResourceException(Status.SERVER_ERROR_INTERNAL,
                     ex.getMessage(), ex);
         }

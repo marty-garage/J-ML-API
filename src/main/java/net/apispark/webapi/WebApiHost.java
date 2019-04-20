@@ -23,18 +23,7 @@ public class WebApiHost {
        c.getDefaultHost().attach("/v1", new WebApiApplication());
        c.start();
        
-       Session session = HibernateUtil.getSessionFactory().openSession();
        
-       session.beginTransaction();
-       MLUser model = new MLUser();
-       // Check database version
-       String sql = "select version()";
-       session.save(model);
-       //String result = (String) session.createNativeQuery(sql).getSingleResult();
-       //System.out.println(result);
-       session.getTransaction().commit();
-       session.close();     
-       HibernateUtil.shutdown();
        
        
     }

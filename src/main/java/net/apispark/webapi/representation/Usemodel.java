@@ -4,29 +4,38 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import ml_models.ML_Model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.encog.ml.model.EncogModel;
-import org.encog.neural.neat.NEATNetwork;
+import javax.persistence.Lob;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 /*
  * Model class extension with data usage additional info,
  * serialization of model associated/operated with/by instance of this.
  */
-@Entity
-@Table(name = "Usermodel")
-public class Usemodel<T extends ML_Model, E>{
+@Entity(name = "Usermodels")
+public class Usemodel<T extends ML_Model, E> implements Serializable{
     /** Default serial version ID. */
     private static final long serialVersionUID = 1L;
 
     @Id
     @org.hibernate.annotations.Type(type="pg-uuid")
+    @GeneratedValue(generator = "UUID")
+	@GenericGenerator(
+		name = "UUID",
+		strategy = "org.hibernate.id.UUIDGenerator"
+	)
     private UUID id;// = "890gje09";
+    @Lob
+    //BinaryType
+   
+    @Type(type = "org.hibernate.type.SerializableToBlobType")
+    //@org.hibernate.annotations.Type(type="pg-bytea")
     private T _model;
 
     public Usemodel(T model) {

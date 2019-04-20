@@ -1,12 +1,14 @@
 package ml_models;
 
+import java.io.Serializable;
+
 import org.encog.ConsoleStatusReportable;
 import org.encog.ml.MLRegression;
 import org.encog.ml.data.versatile.VersatileMLDataSet;
 import org.encog.ml.factory.MLMethodFactory;
 import org.encog.ml.model.EncogModel;
 
-public class FF_model extends ML_Model<MLRegression> {
+public class FF_model extends ML_Model<MLRegression> implements Serializable{
 
 	public FF_model(VersatileMLDataSet dataset) {
 		super.set_data(dataset);
